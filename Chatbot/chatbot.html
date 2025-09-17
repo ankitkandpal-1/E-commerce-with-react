@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat bot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+//       function ChatInput() {
+//         return (
+//             <>
+//                 <input placeholder="Send a message to the Chatbot" size="30"></input>
+//                 <button>Send</button>
+//             </>
+//         )
+//       };
+
+//       // function Chatmessage(props) {
+//       //   const message = props.message;
+//       //   const send = props.sender;
+//       //   if(send === 'User'){
+//       //     return (
+//       //     <div>
+//       //       {message}
+//       //     <img src="userProfile.png" width="50"/>
+//       //     </div>
+//       //   )
+//       //   }
+//       //   else{
+//       //     return (
+//       //     <div>
+//       //       <img src="robotprofile.png" width="50"/>
+//       //       {message}
+//       //     </div>
+//       //   )
+
+//       //   }
+        
+
+//       // };
+
+
+//       function Chatmessage ({message , sender}) {
+//         return (
+//           <div>
+//             {sender === 'Robot' && <img src="robotprofile.png" width="50"/>}
+//             {message}
+//             {sender === 'User' && <img src="userProfile.png" width="50"/>}
+//           </div>
+//         )
+
+//       }
+
+    
+//  // <> </> this is a fragnent that we are using to group the html attributes without using div..
+//       const app = (
+//         <>
+//             <ChatInput />
+//             <Chatmessage message="hello bot" sender="User"/>
+//             <Chatmessage message="Hello! How can I help you?" sender="Robot"/>
+//             <Chatmessage message="how you doing?" sender="User"/>
+//             <Chatmessage message="I'm doing great! How can I help you?" sender="Robot"/>
+//             <Chatmessage message="whats today's date??" sender="User"/>
+//             <Chatmessage message="Today is September 14" sender="Robot"/>
+
+//         </>
+//       )
+
+//       function ChatMessages({ chatMessages }) {
+//         return (
+//           <>
+//             {chatMessages.map((chatMessage) => {
+//               return (
+//                 <ChatMessage
+//                   message={chatMessage.message}
+//                   sender={chatMessage.sender}
+//                   key={chatMessage.id}
+//                 />
+//               );
+//             })}
+//           </>
+//         );
+//       }
+
+
+//       function App() {
+//         const [chatMessages, setChatMessages] = React.useState([{
+//           message: 'hello chatbot',
+//           sender: 'user',
+//           id: 'id1'
+//         }, {
+//           message: 'Hello! How can I help you?',
+//           sender: 'robot',
+//           id: 'id2'
+//         }, {
+//           message: 'can you get me todays date?',
+//           sender: 'user',
+//           id: 'id3'
+//         }, {
+//           message: 'Today is September 27',
+//           sender: 'robot',
+//           id: 'id4'
+//         }]);
+//         // const [chatMessages, setChatMessages] = array;
+//         // const chatMessages = array[0];
+//         // const setChatMessages = array[1];
+
+//         return (
+//           <>
+//             <ChatInput
+//               chatMessages={chatMessages}
+//               setChatMessages={setChatMessages}
+//             />
+//             <ChatMessages
+//               chatMessages={chatMessages}
+//             />
+//           </>
+//         );
+//       }
+
+
+
+
+
+      function ChatInput({ chatMessages, setChatMessages }) {
+        const [inputText , setinputtext] = React.useState('');
+
+        function saveInputText(event) {
+          setInputText(event.target.value);
+        }
+
+        function sendMessage() {
+          const newChatMessages = [
+            ...chatMessages,
+            {
+              message: inputText,
+              sender: 'user',
+              id: crypto.randomUUID()
+            }
+          ];
+
+          setChatMessages(newChatMessages);
+
+          const response = Chatbot.getResponse(inputText);
+          setChatMessages([
+            ...newChatMessages,
+            {
+              message: response,
+              sender:'robot' ,
+              id: crypto.randomUUID()
+            }
+          ]);
+
+          setinputtext('');
+        }
+
+        return (
+          <>
+          <input placeholder="Start sending messages to the chatbot"
+            onchange = {saveInputText}
+            value = {inputtext}
+            />
+          </>
+        )
+      };
+
+
+       function ChatMessage({ message, sender }) {
+        return (
+          <div>
+            {sender === 'robot' && (
+              <img src="robotprofile.png" width="50" />
+            )}
+            {message}
+            {sender === 'user' && (
+              <img src="userProfile.png" width="50" />
+            )}
+          </div>
+        );
+       }
+
+       function ChatMessages({ chatMessages }) {
+        return (
+          <>
+            {chatMessages.map((chatMessage) => {
+              return (
+                <ChatMessage
+                  message={chatMessage.message}
+                  sender={chatMessage.sender}
+                  key={chatMessage.id}
+                />
+              );
+            })}
+          </>
+        );
+      }
+
+      function App() {
+        const [chatMessages, setChatMessages] = React.useState([{
+          message: 'hello chatbot',
+          sender: 'user',
+          id: 'id1'
+        }, {
+          message: 'Hello! How can I help you?',
+          sender: 'robot',
+          id: 'id2'
+        }, {
+          message: 'can you get me todays date?',
+          sender: 'user',
+          id: 'id3'
+        }, {
+          message: 'Today is September 27',
+          sender: 'robot',
+          id: 'id4'
+        }]);
+        // const [chatMessages, setChatMessages] = array;
+        // const chatMessages = array[0];
+        // const setChatMessages = array[1];
+
+        return (
+          <>
+            <ChatInput
+              chatMessages={chatMessages}
+              setChatMessages={setChatMessages}
+            />
+            <ChatMessages
+              chatMessages={chatMessages}
+            />
+          </>
+        );
+      }
+
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html>

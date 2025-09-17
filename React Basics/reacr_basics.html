@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel"> // babel is known as javascript compiler it generally convert the code into javascript. JSX = javascript XML.
+
+
+      const button = <button>hello</button>;
+      const paragraph = <p>paragraph of text</p>;
+      const divison = (
+         <div>
+        <button>hello</button>
+        <p>paragraph of text</p>
+        </div>);
+      const container = document.querySelector('.js-container');  //here we got the html attribute                                              into the javascript using dom
+      ReactDOM.createRoot(container).render('Welcome to SuperSimpleDev React Course');
+      ReactDOM.createRoot(container).render(button);
+      ReactDOM.createRoot(container).render(paragraph);
+      ReactDOM.createRoot(container).render(divison);
+    </script>
+  </body>
+</html>
+
+<!-- 1. React is an external library.
+ React help to make the website easier..
+ 
+ 
+ -->
