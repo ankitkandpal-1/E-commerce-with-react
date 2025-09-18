@@ -11,12 +11,12 @@ export function Homepage() {
   const [cart , setcart] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/products')
+    axios.get('/api/products')
       .then((response) => {
         setproducts(response.data);
       });
 
-    axios.get('http://localhost:3000/api/cart-items')
+    axios.get('/api/cart-items')
     .then((response) => {
         setcart(response.data);
     });
