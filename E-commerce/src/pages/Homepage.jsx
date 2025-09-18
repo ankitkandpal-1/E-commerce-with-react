@@ -2,18 +2,33 @@ import { Link } from 'react-router';
 import './header.css';
 import './Homepage.css';
 import axios from 'axios';
-import { useEffect , useState} from 'react';
+import { useEffect, useState } from 'react';
 
 export function Homepage() {
 
-  const [ products , setproducts] = useState ([]);
- 
+  const [products, setproducts] = useState([]);
+
+  const [cart , setcart] = useState([]);
+
   useEffect(() => {
     axios.get('http://localhost:3000/api/products')
       .then((response) => {
         setproducts(response.data);
-      })
-  } , [] )
+      });
+
+    axios.get('http://localhost:3000/api/cart-items')
+    .then((response) => {
+        setcart(response.data);
+    });
+  }, []);
+
+
+  let TotalQuantity = 0;
+  cart.forEach((cartItem) => {
+    TotalQuantity += cartItem.quantity;
+  });
+
+
 
 
 
@@ -47,7 +62,7 @@ export function Homepage() {
 
           <Link className="cart-link header-link" to="/Checkout-page">
             <img className="cart-icon" src="images/icons/cart-icon.png" />
-            <div className="cart-quantity">3</div>
+            <div className="cart-quantity">{TotalQuantity}</div>
             <div className="cart-text">Cart</div>
           </Link>
         </div>
