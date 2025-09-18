@@ -2,13 +2,19 @@ import { Link } from 'react-router';
 import './header.css';
 import './Homepage.css';
 import axios from 'axios';
-import { products } from '../../Starting-code/data/products';
+import { useEffect , useState} from 'react';
 
 export function Homepage() {
+
+  const [ products , setproducts] = useState ([]);
+ 
+  useEffect(() => {
     axios.get('http://localhost:3000/api/products')
-    .then((response) => {
-        console.log(response.data);
-    })
+      .then((response) => {
+        setproducts(response.data);
+      })
+  } , [] )
+
 
 
   return (
@@ -55,7 +61,7 @@ export function Homepage() {
               <div key={product.id} className="product-container">
                 <div className="product-image-container">
                   <img className="product-image"
-                    src={product.image}/>
+                    src={product.image} />
                 </div>
 
                 <div className="product-name limit-text-to-2-lines">
@@ -66,7 +72,7 @@ export function Homepage() {
                   <img className="product-rating-stars"
                     src={`images/ratings/rating-${product.rating.stars * 10}.png`} />
                   <div className="product-rating-count link-primary">
-                     {product.rating.count}
+                    {product.rating.count}
                   </div>
                 </div>
 
