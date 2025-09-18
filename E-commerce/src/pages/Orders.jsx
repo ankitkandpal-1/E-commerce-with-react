@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import './header.css';
 import './Orders.css';
 
@@ -9,12 +10,12 @@ export function Orders() {
 
             <div className="header">
                 <div className="left-section">
-                    <a href="/" className="header-link">
+                    <Link to="/" className="header-link">
                         <img className="logo"
                             src="images/logo-white.png" />
                         <img className="mobile-logo"
                             src="images/mobile-logo-white.png" />
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="middle-section">
@@ -26,16 +27,16 @@ export function Orders() {
                 </div>
 
                 <div className="right-section">
-                    <a className="orders-link header-link" href="/Orders">
+                    <Link className="orders-link header-link" to="/Orders">
 
                         <span className="orders-text">Orders</span>
-                    </a>
+                    </Link>
 
-                    <a className="cart-link header-link" href="/Checkout-page">
+                    <Link className="cart-link header-link" to="/Checkout-page">
                         <img className="cart-icon" src="images/icons/cart-icon.png" />
                         <div className="cart-quantity">3</div>
                         <div className="cart-text">Cart</div>
-                    </a>
+                    </Link>
                 </div>
             </div>
 
@@ -85,11 +86,11 @@ export function Orders() {
                             </div>
 
                             <div className="product-actions">
-                                <a href="/Tracking">
+                                <Link to="/Tracking">
                                     <button className="track-package-button button-secondary">
                                         Track package
                                     </button>
-                                </a>
+                                </Link>
                             </div>
 
                             <div className="product-image-container">
@@ -113,11 +114,11 @@ export function Orders() {
                             </div>
 
                             <div className="product-actions">
-                                <a href="/Tracking">
+                                <Link to="/Tracking">
                                     <button className="track-package-button button-secondary">
                                         Track package
                                     </button>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -164,11 +165,11 @@ export function Orders() {
                             </div>
 
                             <div className="product-actions">
-                                <a href="/Tracking">
+                                <Link to="/Tracking">
                                     <button className="track-package-button button-secondary">
                                         Track package
                                     </button>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
