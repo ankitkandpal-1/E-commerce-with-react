@@ -4,22 +4,16 @@ import './Homepage.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export function Homepage() {
+export function Homepage({ cart }) {
 
   const [products, setproducts] = useState([]);
 
-  const [cart , setcart] = useState([]);
 
   useEffect(() => {
     axios.get('/api/products')
       .then((response) => {
         setproducts(response.data);
       });
-
-    axios.get('/api/cart-items')
-    .then((response) => {
-        setcart(response.data);
-    });
   }, []);
 
 
