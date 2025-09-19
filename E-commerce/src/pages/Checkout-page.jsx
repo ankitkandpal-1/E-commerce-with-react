@@ -2,15 +2,24 @@ import './Checkout-page.css';
 import './checkout-header.css';
 import { formatmoney } from '../utiles/money';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect  } from 'react';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router';
 
 
-export function CheckoutPage({ cart , fetchAppData }) {
+export function CheckoutPage({ cart, fetchAppData }) {
 
     const [deliveryOption, setdeliveryOption] = useState([]);
 
     const [paymentsummary, setpaymentsummary] = useState(null);
+
+    const Navigate = useNavigate();
+
+    const creatOrder = async () => {
+        axios.post('/api/orders')
+        fetchAppData();
+        Navigate('/orders')
+    }
 
     useEffect(() => {
         axios.get('/api/delivery-options?expand=estimatedDeliveryTime')
@@ -102,18 +111,18 @@ export function CheckoutPage({ cart , fetchAppData }) {
                                                 if (deliveryOption.priceCents > 0) {
                                                     priceString = `${formatmoney(deliveryOption.priceCents)} - Shipping`;
                                                 }
-                                                    const upadtedeliveryoption = async () => {
-                                                        await axios.put(`/api/cart-items/${cartItem.productId}` ,  {
-                                                            deliveryOptionId:deliveryOption.id
-                                                        });
-                                                        await fetchAppData();
-                                                    }
+                                                const upadtedeliveryoption = async () => {
+                                                    await axios.put(`/api/cart-items/${cartItem.productId}`, {
+                                                        deliveryOptionId: deliveryOption.id
+                                                    });
+                                                    await fetchAppData();
+                                                }
                                                 return (
                                                     <div key={deliveryOption.id} className="delivery-option"
-                                                     onClick={upadtedeliveryoption}>
+                                                        onClick={upadtedeliveryoption}>
                                                         <input type="radio"
                                                             checked={deliveryOption.id === cartItem.deliveryOptionId}
-                                                            onChange={() => {}}
+                                                            onChange={() => { }}
                                                             className="delivery-option-input"
                                                             name={`delivery-option-1 ${cartItem.productId}`} />
                                                         <div>
@@ -135,6 +144,8 @@ export function CheckoutPage({ cart , fetchAppData }) {
 
                         })}
                     </div>
+
+
 
 
                     <div className="payment-summary">
@@ -178,7 +189,8 @@ export function CheckoutPage({ cart , fetchAppData }) {
                                     </div>
                                 </div>
 
-                                <button className="place-order-button button-primary">
+                                <button className="place-order-button button-primary"
+                                    onClick={creatOrder}>
                                     Place your order
                                 </button>
                             </>
