@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 
 
-export function CheckoutPage({ cart }) {
+export function CheckoutPage({ cart , fetchAppData }) {
 
     const [deliveryOption, setdeliveryOption] = useState([]);
 
@@ -21,7 +21,7 @@ export function CheckoutPage({ cart }) {
                 setpaymentsummary(response.data);
 
             })
-    }, []);
+    }, [cart]);
 
     return (
         <>
@@ -98,11 +98,18 @@ export function CheckoutPage({ cart }) {
                                                 if (deliveryOption.priceCents > 0) {
                                                     priceString = `${formatmoney(deliveryOption.priceCents)} - Shipping`;
                                                 }
-
+                                                    const upadtedeliveryoption = async () => {
+                                                        await axios.put(`/api/cart-items/${cartItem.productId}` ,  {
+                                                            deliveryOptionId:deliveryOption.id
+                                                        });
+                                                        await fetchAppData();
+                                                    }
                                                 return (
-                                                    <div key={deliveryOption.id} className="delivery-option">
+                                                    <div key={deliveryOption.id} className="delivery-option"
+                                                     onClick={upadtedeliveryoption}>
                                                         <input type="radio"
                                                             checked={deliveryOption.id === cartItem.deliveryOptionId}
+                                                            onChange={() => {}}
                                                             className="delivery-option-input"
                                                             name={`delivery-option-1 ${cartItem.productId}`} />
                                                         <div>
